@@ -1,5 +1,13 @@
 from flask_restplus import Namespace, fields
 
+class RestaurantDto:
+    api = Namespace('restaurant', description='restaurant related operations')
+    restaurant = api.model('restaurant', {
+        'restaurant_name': fields.String(required=True, description='restaurant name'),
+        'restaurant_type': fields.String(required=True, description='restaurant type'),
+        'bio': fields.String(required=True, description='restaurant bio'),
+        'locations': fields.String(required=True, description='restaurant location/locations')
+    })
 
 class OwnerDto:
     api = Namespace('owner', description='owner related operations')
@@ -18,3 +26,4 @@ class AuthDto:
         'username': fields.String(required=True, description='owner username '),
         'password': fields.String(required=True, description='owner password '),
     })
+

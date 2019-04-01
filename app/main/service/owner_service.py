@@ -16,7 +16,7 @@ def save_new_owner(data):
             contact_number = data['contact_number'],
             gender = data['gender']
         )
-        #save_changes(new_owner)
+        save_changes(new_owner)
         return generate_token(new_owner)
     else:
         response_object = {

@@ -11,7 +11,7 @@ _owner = OwnerDto.owner
 @api.route('/')
 class OwnerList(Resource):
     @api.doc('list_of_registered_owners')
-    @api.marshal_list_with(_owner, envelope='data')
+    @api.marshal_list_with(_owner, envelope='Owners')
     def get(self):
         """List all registered owners"""
         return get_all_owners()
