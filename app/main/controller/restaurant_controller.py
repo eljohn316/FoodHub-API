@@ -2,7 +2,7 @@ from flask import request
 from flask_restplus import Resource
 
 from ..util.dto import RestaurantDto
-from ..service.restaurant_service import add_restaurant, get_restaurant, all_restaurants
+from ..service.restaurant_service import add_restaurant, update_restaurant, delete_restaurant, get_restaurant, all_restaurants
 
 api = RestaurantDto.api
 _restaurant = RestaurantDto.restaurant
@@ -22,6 +22,14 @@ class RestaurantList(Resource):
         """Creates a new restaurant"""
         data = request.json
         return add_restaurant(data=data)
+    
+    @api.response(202,'Restaurant successfully updated.')        
+    @api.doc('update a restaurant')
+    @api.expect(_restaurant, validate=True)
+    def put(self):
+        """Update an existing restaurant"""
+        data = request.json
+        return update_restaurant(data=data)
 
 @api.route('/<restaurant_name>')
 @api.param('restaurant_name','Restaurant identifier')
@@ -30,8 +38,22 @@ class Restaurant(Resource):
     @api.doc('get a restaurant')
     @api.marshal_with(_restaurant)
     def get(self, restaurant_name):
+        """Get restaurant"""
         restaurant = get_restaurant(restaurant_name)
         if not restaurant:
             api.abort(404)
         else:
             restaurant
+
+    @api.response(201,'Restaurant successfully deleted.')
+    @api.doc('delete a restaurant')
+    @api.marshal_with(_restaurant)
+    def delete(self, restaurant_name):
+        """Delete an existing restaurant"""
+        restaurant = get_restaurant(restaurant_name)
+        if not restaurant:
+            api.response(404)          
+        else:
+            delete_restaurant(restaurant)
+
+  

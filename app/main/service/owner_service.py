@@ -28,9 +28,7 @@ def save_new_owner(data):
 def generate_token(owner):
     try:
         # generate the auth token
-        print('Hi')
         auth_token = owner.encode_auth_token(owner.owner_id)
-        print('Hello')
         response_object = {
             'status': 'success',
             'message': 'Successfully logged in.',
