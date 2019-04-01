@@ -17,11 +17,7 @@ def save_new_owner(data):
             gender = data['gender']
         )
         save_changes(new_owner)
-        response_object = {
-            'status': 'success',
-            'message': 'Successfully created.'
-        }
-        return response_object, 201
+        return generate_token(new_user)
     else:
         response_object = {
             'status': 'fail',
@@ -29,6 +25,22 @@ def save_new_owner(data):
         }
         return response_object, 409
 
+def generate_token(owner):
+    try:
+        # generate the auth token
+        auth_token = owner.encode_auth_token(owner_id)
+        response_object = {
+            'status': 'success',
+            'message': 'Successfully logged in.',
+            'Authorization': auth_token.decode()
+        }
+        return response_object, 201
+    except Exception as e:
+        response_object = {
+            'status': 'fail',
+            'message': 'Some error occurred. Please try again.'
+        }
+        return response_object, 401
 
 def get_all_owners():
     return Owner.query.all()

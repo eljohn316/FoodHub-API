@@ -11,3 +11,10 @@ class OwnerDto:
         'contact_number': fields.String(required=True, description='owner contact number'),
         'gender': fields.String(required=True, description='owner gender')
     })
+
+class AuthDto:
+    api = Namespace('auth', description='authentication related operations')
+    owner_auth = api.model('auth_details', {
+        'username': fields.String(required=True, description='owner username '),
+        'password': fields.String(required=True, description='owner password '),
+    })
