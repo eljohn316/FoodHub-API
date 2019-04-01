@@ -59,20 +59,18 @@ class Auth:
             return response_object, 403
     
     @staticmethod
-    def get_logged_in_user(new_request):
+    def get_logged_in_owner(new_request):
             # get the auth token
             auth_token = new_request.headers.get('Authorization')
             if auth_token:
-                resp = User.decode_auth_token(auth_token)
+                resp = Owner.decode_auth_token(auth_token)
                 if not isinstance(resp, str):
-                    user = User.query.filter_by(id=resp).first()
+                    owner = Owner.query.filter_by(owner_id=resp).first()
                     response_object = {
                         'status': 'success',
                         'data': {
-                            'user_id': user.id,
-                            'email': user.email,
-                            'admin': user.admin,
-                            'registered_on': str(user.registered_on)
+                            'username': owner.username,
+                            'password': owner.password
                         }
                     }
                     return response_object, 200
