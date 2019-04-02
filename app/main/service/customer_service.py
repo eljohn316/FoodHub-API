@@ -1,13 +1,12 @@
 import datetime
 
 from app.main import db
-from app.main.model.owner import Owner
+from app.main.model.customer import Customer
 
-
-def save_new_owner(data):
-    owner = Owner.query.filter_by(username=data['username']).first()
-    if not owner:
-        new_owner = Owner(
+def save_new_customer(data):
+    customer = Customer.query.filter_by(username=data['username']).first()
+    if not customer:
+        new_customer = Customer(
             username=data['username'],
             password=data['password'],
             firstname = data['firstname'],
@@ -15,20 +14,20 @@ def save_new_owner(data):
             contact_number = data['contact_number'],
             gender = data['gender']
         )
-        save_changes(new_owner)
-        return generate_token(new_owner)
+        save_changes(new_customer)
+        return generate_token(new_customer)
     else:
         response_object = {
             'status': 'fail',
-            'message': 'Owner already exists. Please Log in.',
+            'message': 'customer already exists. Please Log in.',
         }
         return response_object, 409
 
-def generate_token(owner):
+def generate_token(customer):
     try:
         # generate the auth token
         print('Hi')
-        auth_token = owner.encode_auth_token(owner.owner_id)
+        auth_token = customer.encode_auth_token(customer.customer_id)
         print('Hello')
         response_object = {
             'status': 'success',
@@ -43,12 +42,12 @@ def generate_token(owner):
         }
         return response_object, 401
 
-def get_all_owners():
-    return Owner.query.all()
+def get_all_customers():
+    return Customer.query.all()
 
 
-def get_a_owner(username):
-    return Owner.query.filter_by(username=username).first()
+def get_a_customer(username):
+    return Customer.query.filter_by(username=username).first()
 
 
 def save_changes(data):

@@ -12,6 +12,17 @@ class OwnerDto:
         'gender': fields.String(required=True, description='owner gender')
     })
 
+class CustomerDto:
+    api = Namespace('customer', description='customer related operations')
+    customer = api.model('customer', {
+        'username': fields.String(required=True, description='customer username'),
+        'password': fields.String(required=True, description='customer password'),
+        'firstname': fields.String(required=True, description='customer firstname'),
+        'lastname': fields.String(required=True, description='customer lastname'),
+        'contact_number': fields.String(required=True, description='customer contact number'),
+        'gender': fields.String(required=True, description='customer gender')
+    })
+
 class AuthDto:
     api = Namespace('auth', description='authentication related operations')
     owner_auth = api.model('auth_details', {
