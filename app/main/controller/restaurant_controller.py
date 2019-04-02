@@ -23,13 +23,6 @@ class RestaurantList(Resource):
         data = request.json
         return add_restaurant(data=data)
     
-    @api.response(202,'Restaurant successfully updated.')        
-    @api.doc('update a restaurant')
-    @api.expect(_restaurant, validate=True)
-    def put(self):
-        """Update an existing restaurant"""
-        data = request.json
-        return update_restaurant(data=data)
 
 @api.route('/<restaurant_name>')
 @api.param('restaurant_name','Restaurant identifier')
@@ -41,7 +34,7 @@ class Restaurant(Resource):
         """Get restaurant"""
         restaurant = get_restaurant(restaurant_name)
         if not restaurant:
-            api.abort(404)
+            api.abort(404,'Restaurant not found.')
         else:
             return restaurant
 
@@ -51,6 +44,17 @@ class Restaurant(Resource):
         """Delete an existing restaurant"""
         restaurant = get_restaurant(restaurant_name)
         if not restaurant:
-            api.abort(404)
+            api.abort(404,'Restaurant not found.')
         else:
             return delete_restaurant(restaurant)
+    
+    @api.response(202,'Restaurant successfully updated.')        
+    @api.doc('update a restaurant')
+    @api.expect(_restaurant, validate=True)
+    def put(self,restaurant_name):
+        """Update an existing restaurant"""
+        restaurant = get_restaurant(restaurant_name)
+        if not restaurant:
+            api.abort(404,'Restaurant not found.')
+        else:
+            return update_restaurant(restaurant)

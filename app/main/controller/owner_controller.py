@@ -35,5 +35,5 @@ class Owner(Resource):
         """get a owner given its identifier"""
         owner = get_a_owner(username)
         if not owner:
-            api.abort(404)
+            api.abort(404,'Owner not found.')
         return owner

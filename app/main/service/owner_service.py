@@ -17,9 +17,12 @@ def save_new_owner(data):
             gender = data['gender']
         )
         save_changes(new_owner)
-        return generate_token(new_owner)
+        response_object = {
+            'status': 'Success',
+            'message': 'Owner successfully created.'
+        }
+        return response_object, 201
     else:
-
         response_object = {
             'status': 'fail',
             'message': 'Owner already exists. Please Log in.'
@@ -31,8 +34,8 @@ def generate_token(owner):
         # generate the auth token
         auth_token = owner.encode_auth_token(owner.owner_id)
         response_object = {
-            'status': 'success',
-            'message': 'Successfully logged in.',
+            'status': 'Success',
+            'message': 'Owner successfully created.',
             'Authorization': auth_token.decode()
         }
         return response_object, 201
