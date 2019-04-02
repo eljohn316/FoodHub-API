@@ -2,7 +2,7 @@ from flask import request
 from flask_restplus import Resource
 
 from ..util.dto import CustomerDto
-from ..service.customer_service import save_new_customer, get_all_customers, get_a_customer
+from ..service.customer_service import save_new_customer, get_all_customers, get_a_customer, update_customer
 
 api = CustomerDto.api
 _customer = CustomerDto.customer
@@ -38,3 +38,11 @@ class Customer(Resource):
             api.abort(404)
         else:
             return customer
+    
+    @api.doc('update a customer')
+    @api.marshal_with(_customer)
+    @api.expect(_customer, validate=True)
+    def put(self, username):
+        """ Update Restaurant """
+        data = request.json
+        return update_customer(data=data, username=username)
