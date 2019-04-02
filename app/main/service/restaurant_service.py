@@ -23,8 +23,8 @@ def add_restaurant(data):
         }
         return response_object, 409
 
-def update_restaurant(data):
-    update_restaurant = Restaurant.query.filter_by(restaurant_name=data['restaurant_name']).first()
+def update_restaurant(data, restaurant_name):
+    update_restaurant = Restaurant.query.filter_by(restaurant_name=restaurant_name).first()
     if not update_restaurant:
         response_object = {
             'status': 'fail',
@@ -43,22 +43,6 @@ def update_restaurant(data):
         }
         return response_object, 202
 
-# def delete_restaurant(data):
-#     restaurant = Restaurant.query.filter_by(restaurant_name=data['restaurant_name']).first()
-#     if not restaurant:
-#         response_object = {
-#             'status': 'fail',
-#             'message': 'Restaurant not found.'
-#         } 
-#         return response_object, 409
-#     else:    
-#         db.session.delete(restaurant)
-#         db.session.commit()
-#         response_object = {
-#             'status':'success',
-#             'message':'Restaurant deleted.'
-#         }
-#         return response_object, 203
 
 def delete_restaurant(data):
     db.session.delete(data)

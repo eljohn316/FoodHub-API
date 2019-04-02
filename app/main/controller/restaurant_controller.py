@@ -51,10 +51,8 @@ class Restaurant(Resource):
     @api.response(202,'Restaurant successfully updated.')        
     @api.doc('update a restaurant')
     @api.expect(_restaurant, validate=True)
-    def put(self,restaurant_name):
+    def put(self, restaurant_name):
         """Update an existing restaurant"""
-        restaurant = get_restaurant(restaurant_name)
-        if not restaurant:
-            api.abort(404,'Restaurant not found.')
-        else:
-            return update_restaurant(restaurant)
+        data = request.json
+        return update_restaurant(data=data, restaurant_name=restaurant_name)
+        
