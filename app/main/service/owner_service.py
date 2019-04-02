@@ -19,9 +19,10 @@ def save_new_owner(data):
         save_changes(new_owner)
         return generate_token(new_owner)
     else:
+
         response_object = {
             'status': 'fail',
-            'message': 'Owner already exists. Please Log in.',
+            'message': 'Owner already exists. Please Log in.'
         }
         return response_object, 409
 

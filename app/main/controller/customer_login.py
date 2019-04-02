@@ -2,23 +2,23 @@ from flask import request
 from flask_restplus import Resource
 
 from app.main.service.auth_helper import Auth
-from ..util.dto import AuthDto
+from ..util.dto import CustomerLoginDto
 
-api = AuthDto.api
-owner_auth = AuthDto.owner_auth
+api = CustomerLoginDto.api
+customer_auth = CustomerLoginDto.customer_auth
 
 
 @api.route('/login')
-class OwnerLogin(Resource):
+class CustomerLogin(Resource):
     """
-        owner login Resource
+        Customer Login Resource
     """
-    @api.doc('owner login')
-    @api.expect(owner_auth, validate=True)
+    @api.doc('customer login')
+    @api.expect(customer_auth, validate=True)
     def post(self):
         # get the post data
         post_data = request.json
-        return Auth.login_owner(data=post_data)
+        return Auth.login_customer(data=post_data)
 
 
 @api.route('/logout')
@@ -26,8 +26,8 @@ class LogoutAPI(Resource):
     """
     Logout Resource
     """
-    @api.doc('logout a user')
+    @api.doc('logout a customer')
     def post(self):
         # get auth token
         auth_header = request.headers.get('Authorization')
-        return Auth.logout_owner(data=auth_header)
+        return Auth.logout_customer(data=auth_header)

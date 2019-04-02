@@ -43,17 +43,14 @@ class Restaurant(Resource):
         if not restaurant:
             api.abort(404)
         else:
-            restaurant
+            return restaurant
 
-    @api.response(201,'Restaurant successfully deleted.')
+    @api.response(203,'Restaurant successfully deleted.')
     @api.doc('delete a restaurant')
-    @api.marshal_with(_restaurant)
     def delete(self, restaurant_name):
         """Delete an existing restaurant"""
         restaurant = get_restaurant(restaurant_name)
         if not restaurant:
-            api.response(404)          
+            api.abort(404)
         else:
-            delete_restaurant(restaurant)
-
-  
+            return delete_restaurant(restaurant)

@@ -36,5 +36,4 @@ class Owner(Resource):
         owner = get_a_owner(username)
         if not owner:
             api.abort(404)
-        else:
-            return owner
+        return owner

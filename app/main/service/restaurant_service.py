@@ -44,30 +44,30 @@ def update_restaurant(data):
         return response_object, 202
 
 def delete_restaurant(data):
+    restaurant = Restaurant.query.filter_by(restaurant_name=data['restaurant_name']).first()
+    if not restaurant:
+        response_object = {
+            'status': 'fail',
+            'message': 'Restaurant not found.'
+        } 
+        return response_object, 409
+    else:    
+        db.session.delete(restaurant)
+        db.session.commit()
+        response_object = {
+            'status':'success',
+            'message':'Restaurant deleted.'
+        }
+        return response_object, 203
+
+def delete_restaurant(data):
     db.session.delete(data)
     db.session.commit()
     response_object = {
-        'status':'success',
-        'message':'Restaurant deleted.'
+        'status': 'success',
+        'message': 'Restaurant deleted.'
     }
-    return response_object, 200
-
-# def delete_restaurant(data):
-#     restaurant = Restaurant.query.filter_by(restaurant_name=restaurant_name).first()
-#     if not restaurant:
-#         response_object = {
-#             'status': 'fail',
-#             'message': 'restaurant not found.'
-#         }
-#         return response_object, 409
-#     else:
-#         db.session.delete(restaurant)
-#         db.session.commit()
-#         response_object = {
-#             'status': 'success',
-#             'message': 'Restaurant deleted.'
-#         }
-#         return response_object, 201
+    return response_object, 203
 
 def add(data):
     db.session.add(data)

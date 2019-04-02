@@ -8,6 +8,7 @@ from app.main import create_app, db
 from app.main.model import owner
 from app.main.model import restaurant
 from app.main.model import blacklist
+from app.main.model import customer
 from app import blueprint
 
 app = create_app(os.getenv('BOILERPLATE_ENV') or 'dev')

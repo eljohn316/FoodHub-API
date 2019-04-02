@@ -21,9 +21,15 @@ class OwnerDto:
     })
 
 class AuthDto:
-    api = Namespace('auth', description='authentication related operations')
-    owner_auth = api.model('auth_details', {
+    api = Namespace('owner', description='owner login')
+    owner_auth = api.model('login details', {
         'username': fields.String(required=True, description='owner username '),
-        'password': fields.String(required=True, description='owner password '),
+        'password': fields.String(required=True, description='owner password ')
     })
 
+class CustomerLoginDto:
+    api = Namespace('customer', description='customer login')
+    customer_auth = api.model('login details', {
+        'username': fields.String(required=True, description='customer username '),
+        'password': fields.String(required=True, description='customer password ')
+    })
