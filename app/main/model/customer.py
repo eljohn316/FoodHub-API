@@ -15,7 +15,7 @@ class Customer(db.Model):
     contact_number = db.Column(db.String(11))
     gender = db.Column(db.String(6), nullable=False)
     password_hash = db.Column(db.String(80))
-
+    
     @property
     def password(self):
         raise AttributeError('password: write-only field')
@@ -24,11 +24,12 @@ class Customer(db.Model):
     def password(self, password):
         self.password_hash = flask_bcrypt.generate_password_hash(password).decode('utf-8')
 
-    def chech_password(self, password):
+
+    def check_password(self, password):
         return flask_bcrypt.check_password_hash(self.password_hash, password)
 
     def __repr__(self):
-        return "<Customer '{}'".format(self.username)
+        return "<Customer '{}'>".format(self.username)
 
     def encode_auth_token(self, customer_id):
         """
@@ -47,7 +48,8 @@ class Customer(db.Model):
                 algorithm='HS256'
             )
         except Exception as e:
-            return e     
+            return e
+            
     @staticmethod  
     def decode_auth_token(auth_token):
         """
