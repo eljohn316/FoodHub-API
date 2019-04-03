@@ -6,7 +6,8 @@ class RestaurantDto:
         'restaurant_name': fields.String(required=True, description='restaurant name'),
         'restaurant_type': fields.String(required=True, description='restaurant type'),
         'bio': fields.String(required=True, description='restaurant bio'),
-        'locations': fields.String(required=True, description='restaurant location/locations')
+        'locations': fields.String(required=True, description='restaurant location/locations'),
+        'owner': fields.Integer(required=True, description='restaurant owner')
     })
 
 class OwnerDto:

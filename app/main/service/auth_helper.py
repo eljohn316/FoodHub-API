@@ -1,4 +1,4 @@
-from app.main.model.owner import Owner
+from app.main.model.models import *
 from ..service.blacklist_service import save_token
 
 

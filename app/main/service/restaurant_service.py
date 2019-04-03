@@ -1,5 +1,5 @@
 from app.main import db
-from app.main.model.restaurant import Restaurant
+from app.main.model.models import Restaurant
 
 def add_restaurant(data):
     restaurant = Restaurant.query.filter_by(restaurant_name=data['restaurant_name']).first()
@@ -8,7 +8,8 @@ def add_restaurant(data):
             restaurant_name = data['restaurant_name'],
             restaurant_type = data['restaurant_type'],
             bio = data['bio'],
-            locations = data['locations']
+            locations = data['locations'],
+            owner = data['owner']
         )
         add(new_restaurant)
         response_object = {
@@ -52,6 +53,18 @@ def delete_restaurant(data):
         'message': 'Restaurant deleted.'
     }
     return response_object, 203
+
+def restaurant_owned(owner):
+    result = Restaurant.query.filter_by(owner=owner).all()
+    if result == None:
+        response_object = {
+            'status':'fail',
+            'message':'No restaurants found'    
+        }
+        return response_object, 404
+    else:
+        return result
+    
 
 def add(data):
     db.session.add(data)

@@ -1,7 +1,7 @@
 import datetime
 
 from app.main import db
-from app.main.model.customer import Customer
+from app.main.model.models import *
 
 def save_new_customer(data):
     customer = Customer.query.filter_by(username=data['username']).first()
