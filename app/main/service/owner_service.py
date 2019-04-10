@@ -12,6 +12,7 @@ def save_new_owner(data):
             password=data['password'],
             firstname = data['firstname'],
             lastname = data['lastname'],
+            email = data['email'],
             contact_number = data['contact_number'],
             gender = data['gender']
         )
@@ -24,7 +25,7 @@ def save_new_owner(data):
     else:
         response_object = {
             'status': 'fail',
-            'message': 'Owner already exists. Please Log in.'
+            'message': 'Owner already exists.'
         }
         return response_object, 409
 

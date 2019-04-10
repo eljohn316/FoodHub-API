@@ -1,8 +1,8 @@
-"""initial migrate
+"""empty message
 
-Revision ID: 953b687f311e
+Revision ID: a8fcf0237a6e
 Revises: 
-Create Date: 2019-04-03 08:50:27.452148
+Create Date: 2019-04-08 19:03:40.695285
 
 """
 from alembic import op
@@ -10,7 +10,7 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision = '953b687f311e'
+revision = 'a8fcf0237a6e'
 down_revision = None
 branch_labels = None
 depends_on = None
@@ -28,9 +28,10 @@ def upgrade():
     op.create_table('customer',
     sa.Column('customer_id', sa.Integer(), autoincrement=True, nullable=False),
     sa.Column('username', sa.String(length=100), nullable=False),
+    sa.Column('email', sa.String(length=155), nullable=False),
     sa.Column('firstname', sa.String(length=50), nullable=False),
     sa.Column('lastname', sa.String(length=50), nullable=False),
-    sa.Column('contact_number', sa.String(length=11), nullable=True),
+    sa.Column('contact_number', sa.String(length=11), nullable=False),
     sa.Column('gender', sa.String(length=6), nullable=False),
     sa.Column('password_hash', sa.String(length=80), nullable=True),
     sa.PrimaryKeyConstraint('customer_id'),
@@ -39,6 +40,7 @@ def upgrade():
     op.create_table('owner',
     sa.Column('owner_id', sa.Integer(), autoincrement=True, nullable=False),
     sa.Column('username', sa.String(length=100), nullable=False),
+    sa.Column('email', sa.String(length=155), nullable=False),
     sa.Column('firstname', sa.String(length=50), nullable=False),
     sa.Column('lastname', sa.String(length=50), nullable=False),
     sa.Column('contact_number', sa.String(length=11), nullable=True),

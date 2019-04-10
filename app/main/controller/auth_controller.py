@@ -1,8 +1,9 @@
 from flask import request
 from flask_restplus import Resource
 
-from app.main.service.auth_helper import Auth
+from app.main.service.auth_helper import OwnerAuth
 from ..util.dto import AuthDto
+from app.main.util.decorator import owner_token_required
 
 api = AuthDto.api
 owner_auth = AuthDto.owner_auth
@@ -18,16 +19,17 @@ class OwnerLogin(Resource):
     def post(self):
         # get the post data
         post_data = request.json
-        return Auth.login_owner(data=post_data)
+        return OwnerAuth.login_owner(data=post_data)
 
-
+@owner_token_required
 @api.route('/logout')
 class LogoutAPI(Resource):
     """
     Logout Resource
     """
     @api.doc('logout a user')
+    @api.expect(owner_auth)
     def post(self):
         # get auth token
         auth_header = request.headers.get('Authorization')
-        return Auth.logout_owner(data=auth_header)
+        return OwnerAuth.logout_owner(data=auth_header)

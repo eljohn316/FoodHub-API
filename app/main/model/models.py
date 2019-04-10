@@ -28,6 +28,7 @@ class Owner(db.Model):
 
     owner_id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     username = db.Column(db.String(100), nullable=False, unique=True)
+    email = db.Column(db.String(155),nullable=False)
     firstname = db.Column(db.String(50), nullable=False)
     lastname = db.Column(db.String(50), nullable=False)
     contact_number = db.Column(db.String(11))
@@ -93,9 +94,10 @@ class Customer(db.Model):
 
     customer_id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     username = db.Column(db.String(100), nullable=False, unique=True)
+    email = db.Column(db.String(155),nullable=False)
     firstname = db.Column(db.String(50), nullable=False)
     lastname = db.Column(db.String(50), nullable=False)
-    contact_number = db.Column(db.String(11))
+    contact_number = db.Column(db.String(11), nullable=False)
     gender = db.Column(db.String(6), nullable=False)
     password_hash = db.Column(db.String(80))
     

@@ -14,7 +14,7 @@ blueprint = Blueprint('api', __name__)
 api = Api(blueprint,
           title='FOODHUB-API',
           version='1.0',
-          description='API  for FoodHub App'
+          description='API for FoodHub App'
           )
 
 api.add_namespace(owner_ns, path='/owner')

@@ -1,7 +1,7 @@
 from flask import request
 from flask_restplus import Resource
 
-from app.main.service.auth_helper import Auth
+from app.main.service.customer_login_helper import Auth
 from ..util.dto import CustomerLoginDto
 
 api = CustomerLoginDto.api
@@ -18,7 +18,7 @@ class CustomerLogin(Resource):
     def post(self):
         # get the post data
         post_data = request.json
-        return Auth.login_customer(data=post_data)
+        return Auth.login_customer(post_data)
 
 
 @api.route('/logout')

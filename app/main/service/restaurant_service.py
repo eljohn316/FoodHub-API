@@ -26,17 +26,18 @@ def add_restaurant(data):
 
 def update_restaurant(data, restaurant_name):
     update_restaurant = Restaurant.query.filter_by(restaurant_name=restaurant_name).first()
-    if not update_restaurant:
+    if update_restaurant == None:
         response_object = {
             'status': 'fail',
             'message': 'Restaurant not found'
         }
-        return response_object, 409
+        return response_object, 404
     else:
         update_restaurant.restaurant_name = data['restaurant_name']
         update_restaurant.restaurant_type = data['restaurant_type']
         update_restaurant.bio = data['bio']
-        update_restaurant.locations = data['locations']
+        update_restaurant.locations = data['locations'],
+        update_restaurant.owner = data['owner']
         db.session.commit()
         response_object = {
             'status': 'success',
@@ -55,17 +56,8 @@ def delete_restaurant(data):
     return response_object, 203
 
 def restaurant_owned(owner):
-    result = Restaurant.query.filter_by(owner=owner).all()
-    if result == None:
-        response_object = {
-            'status':'fail',
-            'message':'No restaurants found'    
-        }
-        return response_object, 404
-    else:
-        return result
+    return Restaurant.query.filter_by(owner=owner).all()
     
-
 def add(data):
     db.session.add(data)
     db.session.commit()

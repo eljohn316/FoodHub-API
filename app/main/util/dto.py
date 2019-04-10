@@ -13,10 +13,12 @@ class RestaurantDto:
 class OwnerDto:
     api = Namespace('owner', description='owner related operations')
     owner = api.model('owner', {
+        'owner_id': fields.Integer(required=True, description='owner id'),
         'username': fields.String(required=True, description='owner username'),
         'password': fields.String(required=True, description='owner password'),
         'firstname': fields.String(required=True, description='owner firstname'),
         'lastname': fields.String(required=True, description='owner lastname'),
+        'email' : fields.String(required=True, description='owner email'),
         'contact_number': fields.String(required=True, description='owner contact number'),
         'gender': fields.String(required=True, description='owner gender')
     })
@@ -28,6 +30,7 @@ class CustomerDto:
         'password': fields.String(required=True, description='customer password'),
         'firstname': fields.String(required=True, description='customer firstname'),
         'lastname': fields.String(required=True, description='customer lastname'),
+        'email' : fields.String(required=True, description='customer email'),
         'contact_number': fields.String(required=True, description='customer contact number'),
         'gender': fields.String(required=True, description='customer gender')
     })
@@ -45,3 +48,15 @@ class CustomerLoginDto:
         'username': fields.String(required=True, description='customer username '),
         'password': fields.String(required=True, description='customer password ')
     })
+
+class ReturnDataDto:
+    api = Namespace('For owner and customer', description='Expected display format.')
+    returndata = api.model('Details', {
+        'username': fields.String(required=True, description='username'),
+        'firstname': fields.String(required=True, description='firstname'),
+        'lastname': fields.String(required=True, description='lastname'),
+        'email' : fields.String(required=True, description='email'),
+        'contact_number': fields.String(required=True, description='contact number'),
+        'gender': fields.String(required=True, description='gender')
+    })
+

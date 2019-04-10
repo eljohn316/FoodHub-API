@@ -1,15 +1,17 @@
 from flask import request
 from flask_restplus import Resource
+from app.main.util.decorator import owner_token_required
 
-from ..util.dto import OwnerDto
+from ..util.dto import OwnerDto, ReturnDataDto
 from ..service.owner_service import save_new_owner, get_all_owners, get_a_owner
 
 api = OwnerDto.api
 _owner = OwnerDto.owner
-
+_data = ReturnDataDto.returndata
 
 @api.route('/')
 class OwnerList(Resource):
+    @owner_token_required
     @api.doc('list_of_registered_owners')
     @api.marshal_list_with(_owner, envelope='Owners')
     def get(self):
@@ -17,6 +19,7 @@ class OwnerList(Resource):
         return get_all_owners()
 
     @api.response(201, 'Owner successfully created.')
+    @api.response(409, 'Owner already exists.')
     @api.doc('create a new owner')
     @api.expect(_owner, validate=True)
     def post(self):
@@ -29,8 +32,9 @@ class OwnerList(Resource):
 @api.param('username', 'The Owner identifier')
 @api.response(404, 'Owner not found.')
 class Owner(Resource):
+    @owner_token_required
     @api.doc('get a owner')
-    @api.marshal_with(_owner)
+    @api.marshal_with(_data, envelope='Owner')
     def get(self, username):
         """get a owner given its identifier"""
         owner = get_a_owner(username)

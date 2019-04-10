@@ -1,8 +1,8 @@
-from app.main.model.models import *
+from app.main.model.models import Owner
 from ..service.blacklist_service import save_token
 
 
-class Auth:
+class OwnerAuth:
 
     @staticmethod
     def login_owner(data):
@@ -36,10 +36,11 @@ class Auth:
 
     @staticmethod
     def logout_owner(data):
-        if data:
-            auth_token = data.split(" ")[1]
-        else:
-            auth_token = ''
+        auth_token = data
+        # if data:
+        #     auth_token = data.split(" ")[1]
+        # else:
+        #     auth_token = ''
         if auth_token:
             resp = Owner.decode_auth_token(auth_token)
             if not isinstance(resp, str):
@@ -66,11 +67,13 @@ class Auth:
                 resp = Owner.decode_auth_token(auth_token)
                 if not isinstance(resp, str):
                     owner = Owner.query.filter_by(owner_id=resp).first()
+                    username = Owner.query.filter_by(username=resp).first()
+                    password = Owner.query.filter_by(password=resp).first()
                     response_object = {
                         'status': 'success',
                         'data': {
-                            'username': owner.username,
-                            'password': owner.password
+                            'username': username,
+                            'password': password
                         }
                     }
                     return response_object, 200
@@ -82,6 +85,6 @@ class Auth:
             else:
                 response_object = {
                     'status': 'fail',
-                    'message': 'Provide a valid auth token.'
+                    'message': 'Token is missing. Provide a valid token.'
                 }
                 return response_object, 401

@@ -1,56 +1,59 @@
-import datetime
-
 from app.main import db
-from app.main.model.models import *
+from app.main.model.models import Customer
 
 def save_new_customer(data):
     customer = Customer.query.filter_by(username=data['username']).first()
     if not customer:
         new_customer = Customer(
-            username=data['username'],
-            password=data['password'],
+            username = data['username'],
+            password = data['password'],
             firstname = data['firstname'],
             lastname = data['lastname'],
+            email = data['email'],
             contact_number = data['contact_number'],
             gender = data['gender']
         )
         save_changes(new_customer)
-        return generate_token(new_customer)
+        response_object = {
+            'status':'success',
+            'message':'Customer created successfully'
+        }
+        return response_object, 201
     else:
         response_object = {
             'status': 'fail',
-            'message': 'customer already exists. Please Log in.',
+            'message': 'customer already exists. Please Log in.'
         }
         return response_object, 409
 
-def update_customer(data, username):
+def update_customer(data,username):
     update_customer = Customer.query.filter_by(username=username).first()
-    if not update_customer:
+    if update_customer == None:
         response_object = {
-            'status': 'fail',
+            'status':'fail',
             'message': 'Customer not found'
         }
-        return response_object, 409
+        return response_object, 404
     else:
-        update_customer.username = data['username']
-        update_customer.firstname = data['firstname']
-        update_customer.lastname = data['lastname']
-        update_customer.gender = data['gender']
-        update_customer.contact_number = data['contact_number']
+        update_customer.username = data['username'],
+        update_customer.firstname = data['firstname'],
+        update_customer.lastname = data['lastname'],
+        update_customer.email = data['email'],
+        update_customer.contact_number = data['contact_number'],
+        update_customer.gender = data['gender'],
         update_customer.password = data['password']
         db.session.commit()
         response_object = {
-            'status': 'success',
-            'message': 'Successfully updated'
+            'status':'success',
+            'message':'Customer updated successfully!'
         }
         return response_object, 202
+
 
 def generate_token(customer):
     try:
         # generate the auth token
-        print('Hi')
         auth_token = customer.encode_auth_token(customer.customer_id)
-        print('Hello')
         response_object = {
             'status': 'success',
             'message': 'Successfully logged in.',
@@ -72,6 +75,6 @@ def get_a_customer(username):
     return Customer.query.filter_by(username=username).first()
 
 
-def save_changes(data):
-    db.session.add(data)
+def save_changes(customer):
+    db.session.add(customer)
     db.session.commit()

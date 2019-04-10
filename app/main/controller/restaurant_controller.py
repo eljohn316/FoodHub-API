@@ -30,6 +30,7 @@ class RestaurantList(Resource):
 class Restaurant(Resource):
     @api.doc('get a restaurant')
     @api.marshal_with(_restaurant)
+    @api.response(404,'Restaurant not found.')
     def get(self, restaurant_name):
         """Get restaurant"""
         restaurant = get_restaurant(restaurant_name)
@@ -40,6 +41,7 @@ class Restaurant(Resource):
 
     @api.response(203,'Restaurant successfully deleted.')
     @api.doc('delete a restaurant')
+    @api.response(404,'Restaurant not found.')
     def delete(self, restaurant_name):
         """Delete an existing restaurant"""
         restaurant = get_restaurant(restaurant_name)
@@ -58,13 +60,14 @@ class Restaurant(Resource):
 
 @api.route('/<int:owner>')
 @api.param('owner','Owner identifier')
-@api.response(404,'Restaurant not found.')
+@api.response(404,'Owner does not exist.')
 class RestaurantOwned(Resource):
     """Get restaurant by owner"""
     @api.doc('get restaurant by owner')
     @api.marshal_with(_restaurant)
+    @api.response(404,'Owner does not exist.')
     def get(self, owner):
         result = restaurant_owned(owner)
         if not result:
-            api.abort(404,'Restaurant not found')
+            api.abort(404,'Owner does not exist.')
         return result
