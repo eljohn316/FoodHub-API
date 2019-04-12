@@ -34,7 +34,7 @@ class OwnerList(Resource):
 class Owner(Resource):
     @owner_token_required
     @api.doc('get a owner')
-    @api.marshal_with(_data, envelope='Owner')
+    @api.marshal_with(_owner, envelope='Owner')
     def get(self, username):
         """get a owner given its identifier"""
         owner = get_a_owner(username)

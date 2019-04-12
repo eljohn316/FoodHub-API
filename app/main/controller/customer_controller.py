@@ -13,7 +13,7 @@ _data = ReturnDataDto.returndata
 class CustomerList(Resource):
     @customer_token_required
     @api.doc('list_of_registered_customers')
-    @api.marshal_list_with(_data, envelope='Customers')
+    @api.marshal_list_with(_customer, envelope='Customers')
     def get(self):
         """List all registered customers"""
         return get_all_customers()
@@ -34,7 +34,7 @@ class Customer(Resource):
     @customer_token_required
     @api.doc('get a customer')
     @api.response(404, 'Customer not found.')
-    @api.marshal_with(_data, envelope='Customer')
+    @api.marshal_with(_customer, envelope='Customer')
     def get(self, username):
         """get a customer given its identifier"""
         customer = get_a_customer(username)
