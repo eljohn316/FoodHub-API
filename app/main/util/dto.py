@@ -13,6 +13,18 @@ class RestaurantDto:
 class OwnerDto:
     api = Namespace('owner', description='owner related operations')
     owner = api.model('owner', {
+        'username': fields.String(required=True, description='owner username'),
+        'password': fields.String(required=True, description='owner password'),
+        'firstname': fields.String(required=True, description='owner firstname'),
+        'lastname': fields.String(required=True, description='owner lastname'),
+        'email' : fields.String(required=True, description='owner email'),
+        'contact_number': fields.String(required=True, description='owner contact number'),
+        'gender': fields.String(required=True, description='owner gender')
+    })
+
+class OwnerExpectDto:
+    api = Namespace('owner', description='owner related operations')
+    data = api.model('owner', {
         'owner_id': fields.Integer(required=True, description='owner id'),
         'username': fields.String(required=True, description='owner username'),
         'password': fields.String(required=True, description='owner password'),
@@ -22,6 +34,8 @@ class OwnerDto:
         'contact_number': fields.String(required=True, description='owner contact number'),
         'gender': fields.String(required=True, description='owner gender')
     })
+
+
 
 class CustomerDto:
     api = Namespace('customer', description='customer related operations')
@@ -52,6 +66,7 @@ class CustomerLoginDto:
 class ReturnDataDto:
     api = Namespace('For owner and customer', description='Expected display format.')
     returndata = api.model('Details', {
+        'id': fields.Integer(required=True, description=' id'),
         'username': fields.String(required=True, description='username'),
         'firstname': fields.String(required=True, description='firstname'),
         'lastname': fields.String(required=True, description='lastname'),

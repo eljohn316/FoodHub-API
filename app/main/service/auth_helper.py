@@ -1,6 +1,6 @@
 from app.main.model.models import Owner
 from ..service.blacklist_service import save_token
-
+import jwt
 
 class OwnerAuth:
 
@@ -9,9 +9,10 @@ class OwnerAuth:
         try:
             # fetch the user data
             owner = Owner.query.filter_by(username=data.get('username')).first()
-            owner_id = Owner.query.filter_by(owner_id=data.get('owner_id')).first()
+            # owner_id = owner.owner_id
+            #owner_id = Owner.query.filter_by(owner_id=data.get('owner_id')).first()
             if owner and owner.check_password(data.get('password')):
-                auth_token = owner.encode_auth_token(owner_id)
+                auth_token = owner.encode_auth_token(owner.owner_id)
                 if auth_token:
                     response_object = {
                         'status': 'success',
@@ -27,7 +28,7 @@ class OwnerAuth:
                 return response_object, 401
 
         except Exception as e:
-            print(e)
+
             response_object = {
                 'status': 'fail',
                 'message': 'Try again'
@@ -36,13 +37,14 @@ class OwnerAuth:
 
     @staticmethod
     def logout_owner(data):
-        auth_token = data
-        # if data:
-        #     auth_token = data.split(" ")[1]
-        # else:
-        #     auth_token = ''
+        if data:
+            strdata= str(data)
+            auth_token = strdata.split(".")[1]
+        else:
+            auth_token = ''
         if auth_token:
             resp = Owner.decode_auth_token(auth_token)
+            print(resp)
             if not isinstance(resp, str):
                 # mark the token as blacklisted
                 return save_token(token=auth_token)
@@ -65,15 +67,17 @@ class OwnerAuth:
             auth_token = new_request.headers.get('Authorization')
             if auth_token:
                 resp = Owner.decode_auth_token(auth_token)
+                print(resp)
                 if not isinstance(resp, str):
                     owner = Owner.query.filter_by(owner_id=resp).first()
-                    username = Owner.query.filter_by(username=resp).first()
-                    password = Owner.query.filter_by(password=resp).first()
+                    username = owner.username
+                    print(owner)
+                    # username = Owner.query.filter_by(username=resp).first()
+                    # password = Owner.query.filter_by(password=resp).first()
                     response_object = {
                         'status': 'success',
                         'data': {
-                            'username': username,
-                            'password': password
+                            'username': owner.username
                         }
                     }
                     return response_object, 200

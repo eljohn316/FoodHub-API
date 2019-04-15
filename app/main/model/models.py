@@ -75,7 +75,7 @@ class Owner(db.Model):
         Decodes the auth token
         :param auth_token:
         :return: integer|string
-        """
+        """ 
         try:
             payload = jwt.decode(auth_token, key)
             is_blacklisted_token = BlacklistToken.check_blacklist(auth_token)

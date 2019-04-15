@@ -2,6 +2,7 @@ from functools import wraps
 from flask import request
 from app.main.service.auth_helper import OwnerAuth
 from app.main.service.customer_login_helper import Auth
+from app.main.model.models import *
 
 def owner_token_required(f):
     @wraps(f)
@@ -23,6 +24,7 @@ def customer_token_required(f):
 
         data, status = Auth.get_logged_in_customer(request)
         token = data.get('data')
+        
 
         if not token:
             return data, status 
@@ -67,3 +69,14 @@ def admin_token_required(f):
     #     return f(*args, **kwargs)
 
     # return decorated
+
+# def current_user(auth_token):
+#     try:
+#         payload = jwt.decode(auth_token, key)
+#         is_blacklisted_token = BlacklistToken.check_blacklist(auth_token)
+#         if is_blacklisted_token:
+#             return 'Token blacklisted. Please log in again.'
+#         else:
+#             return payload['sub']
+#     except jwt.ExpiredSignatureError:
+#         return 'Signature expired. Please log in again.'

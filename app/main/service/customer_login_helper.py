@@ -8,9 +8,10 @@ class Auth:
         try:
             # fetch the user data
             customer = Customer.query.filter_by(username=data.get('username')).first()
-            customer_id = Customer.query.filter_by(customer_id=data.get('customer_id')).first()
+            # customer_id = customer.customer_id 
+            #customer_id = Customer.query.filter_by(customer_id=data.get('customer_id')).first()
             if customer and customer.check_password(data.get('password')):
-                auth_token = customer.encode_auth_token(customer_id)
+                auth_token = customer.encode_auth_token(customer.customer_id)
                 if auth_token:
                     response_object = {
                         'status': 'success',
@@ -66,13 +67,13 @@ class Auth:
                 resp = Customer.decode_auth_token(auth_token)
                 if not isinstance(resp, str):
                     customer = Customer.query.filter_by(customer_id=resp).first()
-                    username = Customer.query.filter_by(username=resp).first()
-                    password = Customer.query.filter_by(password=resp).first()
+                    # username = Customer.query.filter_by(username=resp).first()
+                    # password = Customer.query.filter_by(password=resp).first()
+                    print(customer)
                     response_object = {
                         'status': 'success',
                         'data': {
-                            'username': username,
-                            'password': password
+                            'username': customer.username
                         }
                     }
                     return response_object, 200
@@ -87,3 +88,4 @@ class Auth:
                     'message': 'Token is missing. Provide a valid token.'
                 }
                 return response_object, 401
+    

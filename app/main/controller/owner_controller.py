@@ -2,18 +2,18 @@ from flask import request
 from flask_restplus import Resource
 from app.main.util.decorator import owner_token_required
 
-from ..util.dto import OwnerDto, ReturnDataDto
-from ..service.owner_service import save_new_owner, get_all_owners, get_a_owner
+from ..util.dto import OwnerDto, ReturnDataDto, OwnerExpectDto
+from ..service.owner_service import *
 
 api = OwnerDto.api
 _owner = OwnerDto.owner
-_data = ReturnDataDto.returndata
+_data = OwnerExpectDto.data
 
 @api.route('/')
 class OwnerList(Resource):
     @owner_token_required
     @api.doc('list_of_registered_owners')
-    @api.marshal_list_with(_owner, envelope='Owners')
+    @api.marshal_list_with(_data, envelope='Owners')
     def get(self):
         """List all registered owners"""
         return get_all_owners()
@@ -41,3 +41,21 @@ class Owner(Resource):
         if not owner:
             api.abort(404,'Owner not found.')
         return owner
+
+@api.route('/current')
+class CurrentOwner(Resource):
+    """
+    Current User Resouorce
+    """
+    @api.marshal_with(_owner, envelope='Owner')
+    @api.doc('get current user')
+    def get(self):
+        auth_header = request.headers.get('Authorization')
+        print('------------')
+        print(auth_header)
+        own_id = current_owner(auth_header)
+        print('................')
+        print(own_id)
+        print('own_id   ')
+        
+        return get_owner_id(own_id)

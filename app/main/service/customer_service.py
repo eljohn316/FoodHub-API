@@ -1,5 +1,9 @@
 from app.main import db
-from app.main.model.models import Customer
+from app.main.model.models import *
+import jwt
+from ..config import key
+from .. import db, flask_bcrypt
+from flask import jsonify
 
 def save_new_customer(data):
     customer = Customer.query.filter_by(username=data['username']).first()
@@ -50,22 +54,57 @@ def update_customer(data,username):
         return response_object, 202
 
 
-def generate_token(customer):
-    try:
-        # generate the auth token
-        auth_token = customer.encode_auth_token(customer.customer_id)
+# def generate_token(customer):
+#     try:
+#         # generate the auth token
+#         auth_token = customer.encode_auth_token(customer.customer_id)
+#         response_object = {
+#             'status': 'success',
+#             'message': 'Successfully logged in.',
+#             'Authorization': auth_token.decode()
+#         }
+#         return response_object, 201
+#     except Exception as e:
+#         response_object = {
+#             'status': 'fail',
+#             'message': 'Some error occurred. Please try again.'
+#         }
+#         return response_object, 401
+
+# def current_customer(auth_token):
+#     data = jwt.decode(auth_token, key)
+#     if not data:
+#         response_object = {
+#             'status': 'fail',
+#             'message': 'Customer not Found'
+#         } 
+#         return response_object, 404
+#     else:
+#         print(data['sub'])
+#         # customer = int(data)
+#         # print(customer)
+#         return Customer.query.filter_by(customer_id = data['sub']).first()
+
+def current_customer(auth_header):
+    if auth_header == None:
         response_object = {
-            'status': 'success',
-            'message': 'Successfully logged in.',
-            'Authorization': auth_token.decode()
+            'status':'fail',
+            'message':'Data not found.'
         }
-        return response_object, 201
-    except Exception as e:
-        response_object = {
-            'status': 'fail',
-            'message': 'Some error occurred. Please try again.'
-        }
-        return response_object, 401
+        return response_object, 400
+    else:
+        # strdata = str(auth_header)
+        # auth_token = strdata.split(".")[1]
+        identifier = Customer.decode_auth_token(auth_header)
+        return identifier    
+   
+    #     response_object = {
+    #         'status':'fail',
+    #         'message':'token not passed'
+    #     }
+    #     return response_object, 401
+    # else:
+    #     return Customer.query.filter_by(customer_id=result).first()
 
 def get_all_customers():
     return Customer.query.all()
@@ -73,6 +112,16 @@ def get_all_customers():
 
 def get_a_customer(username):
     return Customer.query.filter_by(username=username).first()
+
+def get_customer_id(cust_id):
+    print(cust_id)
+    cur_cus = Customer.query.filter_by(customer_id=cust_id).first()
+    # print(cur_cus.firstname)
+    # print(cur_cus.gender)
+    # print(cur_cus.customer_id)
+    # print(cur_cus)
+    # result = cur_cus.customer_id
+    return cur_cus 
 
 
 def save_changes(customer):
