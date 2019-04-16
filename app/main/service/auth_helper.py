@@ -38,8 +38,8 @@ class OwnerAuth:
     @staticmethod
     def logout_owner(data):
         if data:
-            strdata= str(data)
-            auth_token = strdata.split(".")[1]
+            strdata= data
+            auth_token = strdata.split(" ")[0]
         else:
             auth_token = ''
         if auth_token:

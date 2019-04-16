@@ -7,13 +7,14 @@ from ..service.owner_service import *
 
 api = OwnerDto.api
 _owner = OwnerDto.owner
-_data = OwnerExpectDto.data
+
+
 
 @api.route('/')
 class OwnerList(Resource):
     @owner_token_required
     @api.doc('list_of_registered_owners')
-    @api.marshal_list_with(_data, envelope='Owners')
+    @api.marshal_list_with(_owner, envelope='Owners')
     def get(self):
         """List all registered owners"""
         return get_all_owners()
@@ -59,3 +60,4 @@ class CurrentOwner(Resource):
         print('own_id   ')
         
         return get_owner_id(own_id)
+

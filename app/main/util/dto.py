@@ -13,8 +13,8 @@ class RestaurantDto:
 class OwnerDto:
     api = Namespace('owner', description='owner related operations')
     owner = api.model('owner', {
-        'username': fields.String(required=True, description='owner username'),
-        'password': fields.String(required=True, description='owner password'),
+        # 'username': fields.String(required=True, description='owner username'),
+        # 'password': fields.String(required=True, description='owner password'),
         'firstname': fields.String(required=True, description='owner firstname'),
         'lastname': fields.String(required=True, description='owner lastname'),
         'email' : fields.String(required=True, description='owner email'),
@@ -25,9 +25,9 @@ class OwnerDto:
 class OwnerExpectDto:
     api = Namespace('owner', description='owner related operations')
     data = api.model('owner', {
-        'owner_id': fields.Integer(required=True, description='owner id'),
-        'username': fields.String(required=True, description='owner username'),
-        'password': fields.String(required=True, description='owner password'),
+        # 'owner_id': fields.Integer(required=True, description='owner id'),
+        # 'username': fields.String(required=True, description='owner username'),
+        # 'password': fields.String(required=True, description='owner password'),
         'firstname': fields.String(required=True, description='owner firstname'),
         'lastname': fields.String(required=True, description='owner lastname'),
         'email' : fields.String(required=True, description='owner email'),
@@ -40,8 +40,8 @@ class OwnerExpectDto:
 class CustomerDto:
     api = Namespace('customer', description='customer related operations')
     customer = api.model('customer', {
-        'username': fields.String(required=True, description='customer username'),
-        'password': fields.String(required=True, description='customer password'),
+        # 'username': fields.String(required=True, description='customer username'),
+        # 'password': fields.String(required=True, description='customer password'),
         'firstname': fields.String(required=True, description='customer firstname'),
         'lastname': fields.String(required=True, description='customer lastname'),
         'email' : fields.String(required=True, description='customer email'),
