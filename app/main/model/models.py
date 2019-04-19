@@ -17,6 +17,7 @@ class Restaurant(db.Model):
     bio = db.Column(db.String(200), nullable=False)
     locations = db.Column(db.String(200), nullable=False)
     owner = db.Column(db.Integer, db.ForeignKey('owner.owner_id'))
+    reservations = db.relationship('Reservations', backref='restaurant_reservation')
 
     def __repr__(self):
         return "<Restaurant '{}'>".format(self.restaurant_name)
@@ -100,6 +101,7 @@ class Customer(db.Model):
     contact_number = db.Column(db.String(11), nullable=False)
     gender = db.Column(db.String(6), nullable=False)
     password_hash = db.Column(db.String(80))
+    reservations = db.relationship('Reservations', backref='reservation_customer')
     
     @property
     def password(self):
@@ -153,3 +155,12 @@ class Customer(db.Model):
             return 'Signature expired. Please log in again.'
         except jwt.InvalidTokenError:
             return 'Invalid token. Please log in again.'
+
+class Reservation(db.Model):
+    __tablename__ = "reservation"
+    reservation_id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    pax_number = db.Column(db.Integer, nullable=False)
+    booking_date = db.Column(db.DateTime, nullable=False)
+    booking_status = db.Column(db.String, nullable=False)
+    customer_reservation = db.Column(db.Integer, db.ForeignKey('customer.customer_id'))
+    restaurant_reservation = db.Column(db.Integer, db.ForeignKey('restaurant.restaurant_id'))

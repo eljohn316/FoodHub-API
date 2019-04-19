@@ -13,8 +13,8 @@ class RestaurantDto:
 class OwnerDto:
     api = Namespace('owner', description='owner related operations')
     owner = api.model('owner', {
-        # 'username': fields.String(required=True, description='owner username'),
-        # 'password': fields.String(required=True, description='owner password'),
+        'username': fields.String(required=True, description='owner username'),
+        'password': fields.String(required=True, description='owner password'),
         'firstname': fields.String(required=True, description='owner firstname'),
         'lastname': fields.String(required=True, description='owner lastname'),
         'email' : fields.String(required=True, description='owner email'),
@@ -74,4 +74,12 @@ class ReturnDataDto:
         'contact_number': fields.String(required=True, description='contact number'),
         'gender': fields.String(required=True, description='gender')
     })
-
+class ReservationDto:
+    api = Namespace('reservations',description='reservation related operations')
+    reservation = api.model('Reservation Details', {
+        'persons': fields.Integer(required=True, description ='number of persons'),
+        'booking_date': fields.DateTime(description ='reservation date'),
+        'booking_status': fields.String(required=True, description ='reservation status'),
+        'restaurant_name' : fields.String(required=True, description ='restaurant name'),
+        'customer_name': fields.String(required=True, description ='customer name')
+    })
