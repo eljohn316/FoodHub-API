@@ -34,4 +34,5 @@ def add_reservation(data):
 def all_reservations():
     return Reservation.query.all()
 
-    
+
+
