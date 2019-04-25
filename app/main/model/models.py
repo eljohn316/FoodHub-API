@@ -17,7 +17,7 @@ class Restaurant(db.Model):
     bio = db.Column(db.String(200), nullable=False)
     locations = db.Column(db.String(200), nullable=False)
     owner = db.Column(db.Integer, db.ForeignKey('owner.owner_id'))
-    reservations = db.relationship('Reservations', backref='restaurant_reservation')
+    restaurant_reservations = db.relationship('Reservation', backref='restaurant_reservations')
 
     def __repr__(self):
         return "<Restaurant '{}'>".format(self.restaurant_name)
@@ -101,7 +101,7 @@ class Customer(db.Model):
     contact_number = db.Column(db.String(11), nullable=False)
     gender = db.Column(db.String(6), nullable=False)
     password_hash = db.Column(db.String(80))
-    reservations = db.relationship('Reservations', backref='reservation_customer')
+    customer_reservation = db.relationship('Reservation', backref='reservation_customers')
     
     @property
     def password(self):
@@ -159,8 +159,15 @@ class Customer(db.Model):
 class Reservation(db.Model):
     __tablename__ = "reservation"
     reservation_id = db.Column(db.Integer, primary_key=True, autoincrement=True)
-    pax_number = db.Column(db.Integer, nullable=False)
+    reservee = db.Column(db.String(155), nullable=False, unique=True)
+    pax_number = db.Column(db.String(155), nullable=False)
     booking_date = db.Column(db.DateTime, nullable=False)
-    booking_status = db.Column(db.String, nullable=False)
-    customer_reservation = db.Column(db.Integer, db.ForeignKey('customer.customer_id'))
-    restaurant_reservation = db.Column(db.Integer, db.ForeignKey('restaurant.restaurant_id'))
+    customer_account = db.Column(db.Integer, db.ForeignKey('customer.customer_id'))
+    restaurant = db.Column(db.Integer, db.ForeignKey('restaurant.restaurant_id'))
+
+    def __repr__(self):
+        return "<Reservation '{}'>".format(self.reservee)
+
+# class AcceptedReservation(db.Model):
+#     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+#     reservee = db.Column(db.String(155), nullable=False)

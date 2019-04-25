@@ -1,5 +1,5 @@
 from app.main import db
-from app.main.model.models import Restaurant
+from app.main.model.models import *
 
 def add_restaurant(data):
     restaurant = Restaurant.query.filter_by(restaurant_name=data['restaurant_name']).first()

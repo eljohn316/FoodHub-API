@@ -1,4 +1,5 @@
 from flask_restplus import Resource
+from flask import request
 
 from ..service.reservation_service import *
 from ..util.dto import ReservationDto
@@ -16,3 +17,11 @@ class ReservationList(Resource):
         """List of all reservations"""
         return all_reservations()
     
+    @api.response(201, 'Reservation created.')
+    @api.response(409, 'Reservation already exists.')
+    @api.doc('create a reservation')
+    @api.expect(_reservation, validate=True)
+    def post(self):
+        """Create reservation"""
+        data = request.json
+        return create_reservation(data=data)

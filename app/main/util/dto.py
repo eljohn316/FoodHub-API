@@ -40,8 +40,8 @@ class OwnerExpectDto:
 class CustomerDto:
     api = Namespace('customer', description='customer related operations')
     customer = api.model('customer', {
-        # 'username': fields.String(required=True, description='customer username'),
-        # 'password': fields.String(required=True, description='customer password'),
+        'username': fields.String(required=True, description='customer username'),
+        'password': fields.String(required=True, description='customer password'),
         'firstname': fields.String(required=True, description='customer firstname'),
         'lastname': fields.String(required=True, description='customer lastname'),
         'email' : fields.String(required=True, description='customer email'),
@@ -77,9 +77,10 @@ class ReturnDataDto:
 class ReservationDto:
     api = Namespace('reservations',description='reservation related operations')
     reservation = api.model('Reservation Details', {
-        'persons': fields.Integer(required=True, description ='number of persons'),
-        'booking_date': fields.DateTime(description ='reservation date'),
-        'booking_status': fields.String(required=True, description ='reservation status'),
-        'restaurant_name' : fields.String(required=True, description ='restaurant name'),
-        'customer_name': fields.String(required=True, description ='customer name')
+        'reservee' : fields.String(required=True, description = 'customer name'),
+        'pax_number': fields.Integer(required=True, description ='number of persons'),
+        # 'booking_date': fields.DateTime(description ='reservation date'),
+        # 'booking_status': fields.String(required=True, description ='reservation status'),
+        'customer_account' : fields.Integer(required=True, description ='customer account'),
+        'restaurant': fields.Integer(required=True, description ='restaurant')
     })
