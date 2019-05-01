@@ -4,11 +4,14 @@ from flask_restplus import Api
 from flask import Blueprint
 
 from .main.controller.owner_controller import api as owner_ns
-from .main.controller.customer_controller import api as customer_ns
+from .main.controller.owner_controller import response_api as response_ns
+# from .main.controller.owner_controller import api_2 as owner_res_ns
+from .main.controller.customer_controller import customer_api as customer_ns
+from .main.controller.customer_controller import reservation_api as reservation_ns
 from .main.controller.auth_controller import api as auth_ns
 from .main.controller.restaurant_controller import api as rest_ns
 from .main.controller.customer_login import api as cust_ns
-from .main.controller.reservation_controller import api as reservation_ns
+# from .main.controller.reservation_controller import api as reservation_ns
 
 blueprint = Blueprint('api', __name__)
 
@@ -24,3 +27,4 @@ api.add_namespace(auth_ns)
 api.add_namespace(rest_ns)
 api.add_namespace(cust_ns)
 api.add_namespace(reservation_ns)
+api.add_namespace(response_ns)

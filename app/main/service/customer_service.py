@@ -1,8 +1,12 @@
+import datetime
+import jwt
+
 from app.main import db
 from app.main.model.models import *
-import jwt
+
 from ..config import key
 from .. import db, flask_bcrypt
+
 from flask import jsonify
 
 def save_new_customer(data):
@@ -106,6 +110,39 @@ def current_customer(auth_header):
     # else:
     #     return Customer.query.filter_by(customer_id=result).first()
 
+def book_a_reservation(data):
+    current_reservation = Reservation.query.filter_by(reservee=data['reservee']).first()
+    if not current_reservation:
+        new_reservation = Reservation(
+            reservee = data['reservee'],
+            number_of_persons = data['number_of_persons'],
+            booking_date = datetime.datetime.now(),
+            customer_account = data['customer_account'],
+            restaurant = data['restaurant']
+        )
+        save_changes(new_reservation)
+        response_object = {
+            'status':'success',
+            'message':'Reservation created.'
+        }
+        return response_object, 201
+    else:
+        response_object = {
+            'status': 'fail',
+            'message': 'Reservation already exists.'
+        }
+        return response_object, 409
+
+def cancel_reservation(data):
+    db.session.delete(data)
+    db.session.commit()
+    response_object = {
+        'status': 'success',
+        'message': 'Reservation canceled.'
+    }
+    return response_object, 203
+
+
 def get_all_customers():
     return Customer.query.all()
 
@@ -123,7 +160,12 @@ def get_customer_id(cust_id):
     # result = cur_cus.customer_id
     return cur_cus 
 
+def get_customer_reservation(reservee):
+    return Reservation.query.filter_by(reservee=reservee).first()
 
-def save_changes(customer):
-    db.session.add(customer)
+def get_reservation(reservation_id):
+    return Reservation.query.filter_by(reservation_id=reservation_id).first()
+
+def save_changes(data):
+    db.session.add(data)
     db.session.commit()

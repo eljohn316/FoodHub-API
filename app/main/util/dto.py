@@ -78,9 +78,18 @@ class ReservationDto:
     api = Namespace('reservations',description='reservation related operations')
     reservation = api.model('Reservation Details', {
         'reservee' : fields.String(required=True, description = 'customer name'),
-        'pax_number': fields.Integer(required=True, description ='number of persons'),
-        # 'booking_date': fields.DateTime(description ='reservation date'),
-        # 'booking_status': fields.String(required=True, description ='reservation status'),
+        'number_of_persons': fields.Integer(required=True, description ='number of persons'),
+        'booking_date': fields.DateTime(description ='reservation date'),
         'customer_account' : fields.Integer(required=True, description ='customer account'),
         'restaurant': fields.Integer(required=True, description ='restaurant')
+    })
+
+class ResponseDto:
+    api = Namespace('response', description='response related operations')
+    response = api.model('Response Details', {
+        'owner_username' : fields.String(required=True, description= 'owner name'),
+        'response' : fields.Boolean(required=True, description='owner response'),
+        'message' : fields.String(required=True, description='owner message'),
+        'owner' : fields.Integer(required=True, description='owner id'),
+        'reservation' : fields.Integer(required=True, description='reservation request')
     })

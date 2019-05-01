@@ -36,6 +36,7 @@ class Owner(db.Model):
     gender = db.Column(db.String(6), nullable=False)
     password_hash = db.Column(db.String(80))
     restaurants = db.relationship('Restaurant', backref='restaurant_owner')
+    respondee = db.relationship('Response', backref='owner_reponse')
 
     @property
     def password(self):
@@ -157,17 +158,30 @@ class Customer(db.Model):
             return 'Invalid token. Please log in again.'
 
 class Reservation(db.Model):
+    """ Reservation Model for storing reservation related details """
     __tablename__ = "reservation"
+
     reservation_id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     reservee = db.Column(db.String(155), nullable=False, unique=True)
-    pax_number = db.Column(db.String(155), nullable=False)
+    number_of_persons = db.Column(db.String(155), nullable=False)
     booking_date = db.Column(db.DateTime, nullable=False)
+    # response = db.Column(db.String(255), nullable=False)
     customer_account = db.Column(db.Integer, db.ForeignKey('customer.customer_id'))
     restaurant = db.Column(db.Integer, db.ForeignKey('restaurant.restaurant_id'))
+    status = db.relationship('Response', backref='reservation_status')
 
     def __repr__(self):
         return "<Reservation '{}'>".format(self.reservee)
 
-# class AcceptedReservation(db.Model):
-#     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
-#     reservee = db.Column(db.String(155), nullable=False)
+class Response(db.Model):
+    """ Response Model for storing response related details """
+    __tablename__ = "response"
+    response_id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    owner_username = db.Column(db.String(155), nullable=False, unique=True)  
+    response = db.Column(db.Boolean, nullable=False)
+    message = db.Column(db.String(300))
+    owner = db.Column(db.Integer, db.ForeignKey('owner.owner_id'))
+    reservation = db.Column(db.Integer, db.ForeignKey('reservation.reservation_id'))
+
+    def __repr__(self):
+        return "<Response '{}'>".format(self.owner_username)

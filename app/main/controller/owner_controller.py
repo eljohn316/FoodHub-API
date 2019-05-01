@@ -2,13 +2,26 @@ from flask import request
 from flask_restplus import Resource
 from app.main.util.decorator import owner_token_required
 
-from ..util.dto import OwnerDto, ReturnDataDto, OwnerExpectDto
+from ..util.dto import *
 from ..service.owner_service import *
 
 api = OwnerDto.api
+response_api = ResponseDto.api
+reservation_api = ReservationDto
+
 _owner = OwnerDto.owner
+_response = ResponseDto.response
+_reservation = ReservationDto.reservation
 
 
+@api.route('/reservation')
+class ReservationList(Resource):
+
+    @api.doc('list_of_all_owner_reservations')
+    @api.marshal_list_with(_reservation, envelope='Reservations')
+    def get(self):
+         """ List of all owner responses. """
+         return reservation_list()
 
 @api.route('/')
 class OwnerList(Resource):
@@ -60,4 +73,18 @@ class CurrentOwner(Resource):
         print('own_id   ')
         
         return get_owner_id(own_id)
+
+@api.route('/reponse')
+class OwnerResponse(Resource):
+    """
+    Owner Response
+    """
+    @api.doc('Owner response')
+    @api.response(201, 'Response successful.')
+    @api.response(409, 'Response already exists.')
+    @api.expect(_response, validate=True)
+    def post(self):
+        """ Owner Response """
+        data = request.json
+        return response(data=data)
 
