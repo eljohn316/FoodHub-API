@@ -91,5 +91,6 @@ class ResponseDto:
         'response' : fields.Boolean(required=True, description='owner response'),
         'message' : fields.String(required=True, description='owner message'),
         'owner' : fields.Integer(required=True, description='owner id'),
-        'reservation' : fields.Integer(required=True, description='reservation request')
+        'reservation' : fields.Integer(required=True, description='reservation request'),
+        'restaurant': fields.Integer(required=True, description='restaurant response')
     })

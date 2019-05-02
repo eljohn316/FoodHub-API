@@ -18,7 +18,8 @@ class Restaurant(db.Model):
     locations = db.Column(db.String(200), nullable=False)
     owner = db.Column(db.Integer, db.ForeignKey('owner.owner_id'))
     restaurant_reservations = db.relationship('Reservation', backref='restaurant_reservations')
-
+    restaurant_response = db.relationship('Response', backref='restaurant_response')
+    
     def __repr__(self):
         return "<Restaurant '{}'>".format(self.restaurant_name)
 
@@ -182,6 +183,7 @@ class Response(db.Model):
     message = db.Column(db.String(300))
     owner = db.Column(db.Integer, db.ForeignKey('owner.owner_id'))
     reservation = db.Column(db.Integer, db.ForeignKey('reservation.reservation_id'))
+    restaurant = db.Column(db.Integer, db.ForeignKey('restaurant.restaurant_id'))
 
     def __repr__(self):
         return "<Response '{}'>".format(self.owner_username)

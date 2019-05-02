@@ -16,7 +16,8 @@ _reservation = ReservationDto.reservation
 
 @api.route('/reservation')
 class ReservationList(Resource):
-
+    
+    @owner_token_required
     @api.doc('list_of_all_owner_reservations')
     @api.marshal_list_with(_reservation, envelope='Reservations')
     def get(self):
@@ -74,11 +75,12 @@ class CurrentOwner(Resource):
         
         return get_owner_id(own_id)
 
-@api.route('/reponse')
+@api.route('/response')
 class OwnerResponse(Resource):
     """
     Owner Response
     """
+    @owner_token_required
     @api.doc('Owner response')
     @api.response(201, 'Response successful.')
     @api.response(409, 'Response already exists.')

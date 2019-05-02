@@ -76,6 +76,7 @@ class CreateReservation(Resource):
     """
     Customer Reservation
     """
+    @customer_token_required
     @customer_api.doc('book_a_reservation')
     @customer_api.response(201, 'Reservation created.')
     @customer_api.expect(_reservation, validate=True)
@@ -91,6 +92,7 @@ class CustomerReservation(Resource):
     """
     List of reservations by customer.
     """
+    @customer_token_required
     @customer_api.doc('get_reservation_by_customer')
     @customer_api.marshal_with(_reservation)
     def get(self, reservee):
