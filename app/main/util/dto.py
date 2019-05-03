@@ -10,11 +10,17 @@ class RestaurantDto:
         'owner': fields.Integer(required=True, description='restaurant owner')
     })
 
+class MenuDto:
+    api = Namespace('menu', description='menu related operations')
+    menu = api.model('menu', {
+        'menu_name': fields.String(required=True, description='menu name')        
+    })
+
 class OwnerDto:
     api = Namespace('owner', description='owner related operations')
     owner = api.model('owner', {
-        # 'username': fields.String(required=True, description='owner username'),
-        # 'password': fields.String(required=True, description='owner password'),
+        'username': fields.String(required=True, description='owner username'),
+        'password': fields.String(required=True, description='owner password'),
         'firstname': fields.String(required=True, description='owner firstname'),
         'lastname': fields.String(required=True, description='owner lastname'),
         'email' : fields.String(required=True, description='owner email'),
@@ -25,9 +31,9 @@ class OwnerDto:
 class OwnerExpectDto:
     api = Namespace('owner', description='owner related operations')
     data = api.model('owner', {
-        # 'owner_id': fields.Integer(required=True, description='owner id'),
-        # 'username': fields.String(required=True, description='owner username'),
-        # 'password': fields.String(required=True, description='owner password'),
+        'owner_id': fields.Integer(required=True, description='owner id'),
+        'username': fields.String(required=True, description='owner username'),
+        'password': fields.String(required=True, description='owner password'),
         'firstname': fields.String(required=True, description='owner firstname'),
         'lastname': fields.String(required=True, description='owner lastname'),
         'email' : fields.String(required=True, description='owner email'),
@@ -40,8 +46,8 @@ class OwnerExpectDto:
 class CustomerDto:
     api = Namespace('customer', description='customer related operations')
     customer = api.model('customer', {
-        # 'username': fields.String(required=True, description='customer username'),
-        # 'password': fields.String(required=True, description='customer password'),
+        'username': fields.String(required=True, description='customer username'),
+        'password': fields.String(required=True, description='customer password'),
         'firstname': fields.String(required=True, description='customer firstname'),
         'lastname': fields.String(required=True, description='customer lastname'),
         'email' : fields.String(required=True, description='customer email'),
@@ -75,3 +81,11 @@ class ReturnDataDto:
         'gender': fields.String(required=True, description='gender')
     })
 
+class ItemDto:
+    api = Namespace('For menu item', description='item related operations')
+    menu_item = api.model('item', {
+        'price': fields.String(required=True, description='item name'),
+        'item_name': fields.String(required=True, description='item type'),
+        'category': fields.String(required=True, description='item bio'),
+        'menu': fields.Integer(required=True, description='item location/locations')
+    })

@@ -21,6 +21,7 @@ class Restaurant(db.Model):
     def __repr__(self):
         return "<Restaurant '{}'>".format(self.restaurant_name)
 
+
         
 class Owner(db.Model):
     """ Owner Model for storing owner related details """
@@ -153,3 +154,27 @@ class Customer(db.Model):
             return 'Signature expired. Please log in again.'
         except jwt.InvalidTokenError:
             return 'Invalid token. Please log in again.'
+
+
+class Menu(db.Model):
+    """ Menu Model for storing menu related details """
+    __tablename__= "menu"
+    
+    menu_id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    menu_name = db.Column(db.String(30), nullable=False, unique=True)
+    restaurant_item = db.relationship('Item', backref='restaurant_item')
+
+    def __repr__(self):
+        return "<Menu '{}'>".format(self.menu_name)
+
+class Item(db.Model):
+    __tablename__ = "item"
+    
+    item_id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    item_name = db.Column(db.String(255), nullable=False, unique=True)
+    price = db.Column(db.String(255), nullable=False)
+    category = db.Column(db.String(255), nullable=False)
+    menu = db.Column(db.Integer, db.ForeignKey('menu.menu_id'))
+
+    def __repr__(self):
+        return "<Item '{}'>".format(self.item_name)
