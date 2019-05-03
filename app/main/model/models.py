@@ -188,7 +188,6 @@ class Response(db.Model):
 
     def __repr__(self):
         return "<Response '{}'>".format(self.owner_username)
-=======
 
 class Menu(db.Model):
     """ Menu Model for storing menu related details """
