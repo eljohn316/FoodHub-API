@@ -10,6 +10,12 @@ class RestaurantDto:
         'owner': fields.Integer(required=True, description='restaurant owner')
     })
 
+class MenuDto:
+    api = Namespace('menu', description='menu related operations')
+    menu = api.model('menu', {
+        'menu_name': fields.String(required=True, description='menu name')        
+    })
+
 class OwnerDto:
     api = Namespace('owner', description='owner related operations')
     owner = api.model('owner', {
@@ -25,9 +31,9 @@ class OwnerDto:
 class OwnerExpectDto:
     api = Namespace('owner', description='owner related operations')
     data = api.model('owner', {
-        # 'owner_id': fields.Integer(required=True, description='owner id'),
-        # 'username': fields.String(required=True, description='owner username'),
-        # 'password': fields.String(required=True, description='owner password'),
+        'owner_id': fields.Integer(required=True, description='owner id'),
+        'username': fields.String(required=True, description='owner username'),
+        'password': fields.String(required=True, description='owner password'),
         'firstname': fields.String(required=True, description='owner firstname'),
         'lastname': fields.String(required=True, description='owner lastname'),
         'email' : fields.String(required=True, description='owner email'),
@@ -93,4 +99,13 @@ class ResponseDto:
         'owner' : fields.Integer(required=True, description='owner id'),
         'reservation' : fields.Integer(required=True, description='reservation request'),
         'restaurant': fields.Integer(required=True, description='restaurant response')
+    })
+
+class ItemDto:
+    api = Namespace('For menu item', description='item related operations')
+    menu_item = api.model('item', {
+        'price': fields.String(required=True, description='item name'),
+        'item_name': fields.String(required=True, description='item type'),
+        'category': fields.String(required=True, description='item bio'),
+        'menu': fields.Integer(required=True, description='item location/locations')
     })

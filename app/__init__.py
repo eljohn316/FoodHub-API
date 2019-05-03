@@ -12,6 +12,8 @@ from .main.controller.auth_controller import api as auth_ns
 from .main.controller.restaurant_controller import api as rest_ns
 from .main.controller.customer_login import api as cust_ns
 # from .main.controller.reservation_controller import api as reservation_ns
+from .main.controller.menu_controller import api as menu_ns
+from .main.controller.menu_controller import item_api as item_ns
 
 blueprint = Blueprint('api', __name__)
 
@@ -28,3 +30,5 @@ api.add_namespace(rest_ns)
 api.add_namespace(cust_ns)
 api.add_namespace(reservation_ns)
 api.add_namespace(response_ns)
+api.add_namespace(menu_ns)
+api.add_namespace(item_ns, path='/menu')
