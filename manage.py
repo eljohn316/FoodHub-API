@@ -16,7 +16,7 @@ app.register_blueprint(blueprint)
 
 app.app_context().push()
 
-CORS(app)
+# CORS(app)
 
 manager = Manager(app)
 
