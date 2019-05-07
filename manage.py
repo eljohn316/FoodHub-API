@@ -11,7 +11,7 @@ from app.main.model import models
 from app.main.model import blacklist
 from app import blueprint
 
-app = create_app(os.getenv('BOILERPLATE_ENV') or 'dev')
+app = create_app(os.getenv('dev')
 app.register_blueprint(blueprint)
 
 app.app_context().push()
