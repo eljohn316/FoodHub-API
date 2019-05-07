@@ -4,14 +4,14 @@ import unittest
 from flask_migrate import Migrate, MigrateCommand
 from flask_script import Manager
 from flask import Flask
-from flask_cors import CORS
+# from flask_cors import CORS
 
 from app.main import create_app, db
 from app.main.model import models
 from app.main.model import blacklist
 from app import blueprint
 
-app = create_app(os.getenv('dev')
+app = create_app('dev')
 app.register_blueprint(blueprint)
 
 app.app_context().push()
