@@ -1,5 +1,5 @@
 import os
-import unittest
+import unittest, psycopg2
 
 from flask_migrate import Migrate, MigrateCommand
 from flask_script import Manager
