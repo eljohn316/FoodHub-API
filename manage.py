@@ -1,5 +1,5 @@
 import os
-import unittest
+import unittest, psycopg2
 
 from flask_migrate import Migrate, MigrateCommand
 from flask_script import Manager
@@ -11,7 +11,7 @@ from app.main.model import models
 from app.main.model import blacklist
 from app import blueprint
 
-app = create_app(os.getenv('BOILERPLATE_ENV') or 'dev')
+app = create_app('dev')
 app.register_blueprint(blueprint)
 
 app.app_context().push()

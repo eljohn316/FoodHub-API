@@ -14,7 +14,7 @@ class DevelopmentConfig(Config):
     # uncomment the line below to use postgres
     # SQLALCHEMY_DATABASE_URI = postgres_local_base
     DEBUG = True
-    SQLALCHEMY_DATABASE_URI = 'postgresql://postgres:iamthebest091897@localhost/foodhub'
+    SQLALCHEMY_DATABASE_URI = 'postgres://kdhjmfmtoliveg:ec66e15e22540faeca6fc2576645c7bfaf38f8588871f23ef3bfda6e5c72f810@ec2-23-23-92-204.compute-1.amazonaws.com:5432/d8hnnck0m0344m'
     SQLALCHEMY_TRACK_MODIFICATIONS = False
 
 
