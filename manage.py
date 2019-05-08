@@ -4,7 +4,7 @@ import unittest
 from flask_migrate import Migrate, MigrateCommand
 from flask_script import Manager
 from flask import Flask
-# from flask_cors import CORS
+from flask_cors import CORS
 
 from app.main import create_app, db
 from app.main.model import models
@@ -16,7 +16,7 @@ app.register_blueprint(blueprint)
 
 app.app_context().push()
 
-# CORS(app)
+CORS(app)
 
 manager = Manager(app)
 
@@ -26,8 +26,7 @@ manager.add_command('db', MigrateCommand)
 
 @manager.command
 def run():
-    port = int(os.environ.get("PORT", 8000))
-    app.run(host='0.0.0.0', port=port)
+    app.run()
 
 @manager.command
 def test():
