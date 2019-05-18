@@ -2,7 +2,7 @@ from flask import request
 from flask_restplus import Resource
 
 from ..util.dto import RestaurantDto
-from ..service.restaurant_service import add_restaurant, update_restaurant, delete_restaurant, get_restaurant, all_restaurants, restaurant_owned
+from ..service.restaurant_service import add_restaurant, update_restaurant, delete_restaurant, get_restaurant, all_restaurants, restaurant_owned, get_restaurant_id
 
 api = RestaurantDto.api
 _restaurant = RestaurantDto.restaurant
@@ -71,3 +71,19 @@ class RestaurantOwned(Resource):
         if not result:
             api.abort(404,'Owner does not exist.')
         return result
+
+
+@api.route('/<restaurant_id>')
+@api.param('restaurant_id', 'Restaurant finder')
+@api.response(404, 'Restaurant not found.')
+class Restaurant(Resource):
+    @api.doc('get a restaurant through ID')
+    @api.marshal_with(_restaurant)
+    @api.response(404, 'Restaurant not found.')
+    def get(self, restaurant_id):
+        """Get restaurant"""
+        restaurant = get_restaurant_id(restaurant_id)
+        if not restaurant:
+            api.abort(404, 'Restaurant not found.')
+        else:
+            return restaurant

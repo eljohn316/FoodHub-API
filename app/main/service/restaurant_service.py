@@ -67,3 +67,7 @@ def all_restaurants():
 
 def get_restaurant(restaurant_name):
     return Restaurant.query.filter_by(restaurant_name=restaurant_name).first()
+
+
+def get_restaurant_id(restaurant_id):
+    return Restaurant.query.filter_by(restaurant_id=restaurant_id).first()
