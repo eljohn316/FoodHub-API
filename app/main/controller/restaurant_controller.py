@@ -76,7 +76,7 @@ class RestaurantOwned(Resource):
 @api.route('/<int:restaurant_id>')
 @api.param('restaurant_id', 'Restaurant finder')
 @api.response(404, 'Restaurant not found.')
-class Restaurant(Resource):
+class RestaurantId(Resource):
     @api.doc('get a restaurant through ID')
     @api.marshal_with(_restaurant)
     @api.response(404, 'Restaurant not found.')
