@@ -58,7 +58,7 @@ class Restaurant(Resource):
         data = request.json
         return update_restaurant(data=data, restaurant_name=restaurant_name)
 
-@api.route('/<int:owner>')
+@api.route('/<int:owner>/owner')
 @api.param('owner','Owner identifier')
 @api.response(404,'Owner does not exist.')
 class RestaurantOwned(Resource):
