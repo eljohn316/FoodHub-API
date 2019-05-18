@@ -73,7 +73,7 @@ class RestaurantOwned(Resource):
         return result
 
 
-@api.route('/<restaurant_id>')
+@api.route('/<int:restaurant_id>')
 @api.param('restaurant_id', 'Restaurant finder')
 @api.response(404, 'Restaurant not found.')
 class Restaurant(Resource):
